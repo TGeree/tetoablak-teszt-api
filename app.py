@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response
 import json
 
 app = Flask(__name__)
@@ -14,7 +14,8 @@ def cikk_kereses():
         cikk for cikk in adatbazis
         if keresett in cikk["cikkszam"].lower() or keresett in cikk["nev"].lower()
     ]
-    return jsonify(talalatok)
+    response_body = json.dumps(talalatok, ensure_ascii=False)
+    return Response(response_body, content_type="application/json")
 
 if __name__ == "__main__":
     app.run(debug=True)
