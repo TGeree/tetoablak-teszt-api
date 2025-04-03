@@ -1,9 +1,9 @@
-from flask import Flask, request, Response
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 
 app = Flask(__name__)
-CORS(app)  # Engedélyezi a más domainekről érkező kéréseket (pl. GPT)
+CORS(app)
 
 # JSON fájl betöltése
 with open("cikklista_apihoz.json", "r", encoding="utf-8") as f:
@@ -16,8 +16,7 @@ def cikk_kereses():
         cikk for cikk in adatbazis
         if keresett in cikk["cikkszam"].lower() or keresett in cikk["nev"].lower()
     ]
-    response_body = json.dumps(talalatok, ensure_ascii=False)
-    return Response(response_body, content_type="application/json")
+    return jsonify({"talalatok": talalatok})
 
 if __name__ == "__main__":
     app.run(debug=True)
