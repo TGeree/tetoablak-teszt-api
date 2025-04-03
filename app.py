@@ -1,7 +1,9 @@
 from flask import Flask, request, Response
+from flask_cors import CORS
 import json
 
 app = Flask(__name__)
+CORS(app)  # Engedélyezi a más domainekről érkező kéréseket (pl. GPT)
 
 # JSON fájl betöltése
 with open("cikklista_apihoz.json", "r", encoding="utf-8") as f:
